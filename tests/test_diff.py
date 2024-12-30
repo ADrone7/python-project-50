@@ -1,14 +1,20 @@
-from gendiff.diff import generate_diff
-from tests.utility import get_test_data_path, read_file
-
-FILE1 = "file1.json"
-FILE2 = "file2.json"
+from gendiff import generate_diff
+from tests.utility import (
+    FILE1,
+    FILE2,
+    FORMATS,
+    RESULT,
+    get_test_data_path,
+    read_file,
+)
 
 
 def test_generate_diff():
+    expected = read_file(RESULT)
     test_data_path = get_test_data_path()
-    file_path1 = test_data_path / FILE1
-    file_path2 = test_data_path / FILE2
-    expected = read_file("json_diff.txt")
-    actual = generate_diff(file_path1, file_path2)
-    assert actual == expected
+
+    for format in FORMATS:
+        file_path1 = str(test_data_path / f"{FILE1}.{format}")
+        file_path2 = str(test_data_path / f"{FILE2}.{format}")
+        actual = generate_diff(file_path1, file_path2)
+        assert actual == expected

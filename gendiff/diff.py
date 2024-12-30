@@ -1,4 +1,4 @@
-from gendiff.read_json import read_json
+from gendiff.parse import parse_file
 
 INDENT = "  "
 SEPARATOR = '\n'
@@ -11,8 +11,8 @@ STATUS_TO_SYMBOLS = {
 
 
 def generate_diff(file_path1: str, file_path2: str) -> str:
-    content1 = read_json(file_path1)
-    content2 = read_json(file_path2)
+    content1 = parse_file(file_path1)
+    content2 = parse_file(file_path2)
 
     difference = {}
     keys = content1.keys() | content2.keys()
