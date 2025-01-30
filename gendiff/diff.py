@@ -1,13 +1,5 @@
+from gendiff.formatters import plain, stylish
 from gendiff.parse import parse_file
-
-INDENT = "  "
-SEPARATOR = '\n'
-STATUS_TO_SYMBOLS = {
-    "added": '+',
-    "removed": '-',
-    "changed": "-+",
-    "unchanged": ' ',
-}
 
 
 def modified(content):
@@ -53,44 +45,6 @@ def build_diff(content1, content2):
     return difference
 
 
-def stylish(difference, depth=0):
-    if not isinstance(difference, dict):
-        if isinstance(difference, bool):
-            difference = str(difference).lower()
-        elif difference is None:
-            difference = 'null'
-        return difference
-
-    indent = INDENT * (2 * depth + 1)
-    report = ['{']
-    for key in sorted(difference.keys()):
-        entry = difference[key]
-        status = entry["status"]
-        match status:
-            case "added":
-                value = stylish(entry["values"], depth + 1)
-                report += [f"{indent}+ {key}: {value}"]
-            case "removed":
-                value = stylish(entry["values"], depth + 1)
-                report += [f"{indent}- {key}: {value}"]
-            case "changed":
-                if isinstance(entry["values"], dict):
-                    value = stylish(entry["values"], depth + 1)
-                    report += [f"{indent}  {key}: {value}"]
-                else:
-                    old_value, new_value = entry["values"]
-                    old_value = stylish(old_value, depth + 1)
-                    new_value = stylish(new_value, depth + 1)
-                    report += [f"{indent}- {key}: {old_value}"]
-                    report += [f"{indent}+ {key}: {new_value}"]
-            case "unchanged":
-                value = stylish(entry["values"], depth + 1)
-                report += [f"{indent}  {key}: {value}"]
-    report.append(f"{INDENT * (2 * depth)}" + '}')
-
-    return SEPARATOR.join(report)
-
-
 def generate_diff(file_path1: str, file_path2: str,
                   format_name: str = 'stylish') -> str:
     content1 = parse_file(file_path1)
@@ -100,6 +54,8 @@ def generate_diff(file_path1: str, file_path2: str,
     match format_name:
         case 'stylish':
             result = stylish(diff)
+        case 'plain':
+            result = plain(diff)
         case _:
             result = stylish(diff)
     return result
