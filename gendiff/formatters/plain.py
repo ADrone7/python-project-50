@@ -13,13 +13,13 @@ def convert(value):
     return value
 
 
-def plain(diff, path=None):
+def format_plain(diff, path=None):
     report = []
 
     def walk(diff, parent=''):
         for key, data in diff.items():
             status = data['status']
-            value = data['values']
+            value = data['value']
             if status == "added":
                 report.append((f"Property '{parent}{key}' was added with "
                                f"value: {convert(value)}"))

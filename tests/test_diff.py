@@ -5,6 +5,7 @@ from tests.utility import (
     FILE2,
     FILE2_RECURSIVE,
     FORMATS,
+    RESULT_RECURSIVE_JSON,
     RESULT_RECURSIVE_PLAIN,
     RESULT_RECURSIVE_STYLISH,
     RESULT_STYLSIH,
@@ -43,4 +44,15 @@ def test_generate_diff_recursive_plain():
         file_path1 = str(test_data_path / f"{FILE1_RECURSIVE}.{format}")
         file_path2 = str(test_data_path / f"{FILE2_RECURSIVE}.{format}")
         actual = generate_diff(file_path1, file_path2, 'plain')
+        assert actual == expected
+
+
+def test_generate_diff_recursive_json():
+    expected = read_file(RESULT_RECURSIVE_JSON)
+    test_data_path = get_test_data_path()
+
+    for format in FORMATS:
+        file_path1 = str(test_data_path / f"{FILE1_RECURSIVE}.{format}")
+        file_path2 = str(test_data_path / f"{FILE2_RECURSIVE}.{format}")
+        actual = generate_diff(file_path1, file_path2, 'json')
         assert actual == expected

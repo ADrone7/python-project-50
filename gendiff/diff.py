@@ -1,4 +1,4 @@
-from gendiff.formatters import plain, stylish
+from gendiff.formatters import format_json, format_plain, format_stylish
 from gendiff.parse import parse_file
 
 
@@ -10,7 +10,7 @@ def modified(content):
     for key in content.keys():
         result[key] = {
             "status": "unchanged",
-            "values": modified(content[key]),
+            "value": modified(content[key]),
         }
 
     return result
@@ -30,16 +30,16 @@ def build_diff(content1, content2):
         result = {}
         if key not in content1:
             result["status"] = "added"
-            result["values"] = modified(content2[key])
+            result["value"] = modified(content2[key])
         elif key not in content2:
             result["status"] = "removed"
-            result["values"] = modified(content1[key])
+            result["value"] = modified(content1[key])
         elif content1[key] == content2[key]:
             result["status"] = "unchanged"
-            result["values"] = modified(content1[key])
+            result["value"] = modified(content1[key])
         else:
             result["status"] = "changed"
-            result["values"] = build_diff(content1[key], content2[key])
+            result["value"] = build_diff(content1[key], content2[key])
         difference[key] = result
     
     return difference
@@ -53,9 +53,11 @@ def generate_diff(file_path1: str, file_path2: str,
     diff = build_diff(content1, content2)
     match format_name:
         case 'stylish':
-            result = stylish(diff)
+            result = format_stylish(diff)
         case 'plain':
-            result = plain(diff)
+            result = format_plain(diff)
+        case 'json':
+            result = format_json(diff)
         case _:
-            result = stylish(diff)
+            result = format_stylish(diff)
     return result

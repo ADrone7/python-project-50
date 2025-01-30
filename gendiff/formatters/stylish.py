@@ -8,7 +8,7 @@ STATUS_TO_SYMBOLS = {
 }
 
 
-def stylish(diff, depth=0):
+def format_stylish(diff, depth=0):
     if not isinstance(diff, dict):
         if isinstance(diff, bool):
             diff = str(diff).lower()
@@ -23,23 +23,23 @@ def stylish(diff, depth=0):
         status = entry["status"]
         match status:
             case "added":
-                value = stylish(entry["values"], depth + 1)
+                value = format_stylish(entry["value"], depth + 1)
                 report += [f"{indent}+ {key}: {value}"]
             case "removed":
-                value = stylish(entry["values"], depth + 1)
+                value = format_stylish(entry["value"], depth + 1)
                 report += [f"{indent}- {key}: {value}"]
             case "changed":
-                if isinstance(entry["values"], dict):
-                    value = stylish(entry["values"], depth + 1)
+                if isinstance(entry["value"], dict):
+                    value = format_stylish(entry["value"], depth + 1)
                     report += [f"{indent}  {key}: {value}"]
                 else:
-                    old_value, new_value = entry["values"]
-                    old_value = stylish(old_value, depth + 1)
-                    new_value = stylish(new_value, depth + 1)
+                    old_value, new_value = entry["value"]
+                    old_value = format_stylish(old_value, depth + 1)
+                    new_value = format_stylish(new_value, depth + 1)
                     report += [f"{indent}- {key}: {old_value}"]
                     report += [f"{indent}+ {key}: {new_value}"]
             case "unchanged":
-                value = stylish(entry["values"], depth + 1)
+                value = format_stylish(entry["value"], depth + 1)
                 report += [f"{indent}  {key}: {value}"]
     report.append(f"{INDENT * (2 * depth)}" + '}')
 
