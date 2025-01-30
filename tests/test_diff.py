@@ -20,7 +20,7 @@ def test_generate_diff_stylish():
     for format in FORMATS:
         file_path1 = str(test_data_path / f"{FILE1}.{format}")
         file_path2 = str(test_data_path / f"{FILE2}.{format}")
-        actual = generate_diff(file_path1, file_path2)
+        actual = generate_diff(file_path1, file_path2, 'stylish')
         assert actual == expected
 
 
@@ -31,7 +31,7 @@ def test_generate_diff_recursive_stylish():
     for format in FORMATS:
         file_path1 = str(test_data_path / f"{FILE1_RECURSIVE}.{format}")
         file_path2 = str(test_data_path / f"{FILE2_RECURSIVE}.{format}")
-        actual = generate_diff(file_path1, file_path2)
+        actual = generate_diff(file_path1, file_path2, 'stylish')
         assert actual == expected
 
 
@@ -42,5 +42,5 @@ def test_generate_diff_recursive_plain():
     for format in FORMATS:
         file_path1 = str(test_data_path / f"{FILE1_RECURSIVE}.{format}")
         file_path2 = str(test_data_path / f"{FILE2_RECURSIVE}.{format}")
-        actual = generate_diff(file_path1, file_path2)
+        actual = generate_diff(file_path1, file_path2, 'plain')
         assert actual == expected
