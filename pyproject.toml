@@ -1,7 +1,7 @@
 [project]
 name = "hexlet-code"
 version = "0.1.1"
-description = "Add your description here"
+description = "Compare two json or yaml files"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
