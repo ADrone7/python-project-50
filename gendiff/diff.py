@@ -2,46 +2,34 @@ from gendiff.formatters import format_json, format_plain, format_stylish
 from gendiff.parse import parse_file
 
 
-def modified(content):
-    if not isinstance(content, dict):
-        return content
-    
-    result = {}
-    for key in content.keys():
-        result[key] = {
-            "status": "unchanged",
-            "value": modified(content[key]),
-        }
-
-    return result
-
-
-def build_diff(content1, content2):
+def build_diff(content1: dict, content2: dict) -> dict:
     difference = {}
 
-    if not isinstance(content1, dict):
-        return content1, modified(content2)
+    def walk_dicts(data1: dict, data2: dict, parent: dict) -> None:
+        keys = data1.keys() | data2.keys()
+        for key in sorted(keys):
+            result = {}
+            if key not in data1:
+                result["status"] = "added"
+                result["value"] = data2[key]
+            elif key not in data2:
+                result["status"] = "removed"
+                result["value"] = data1[key]
+            elif data1[key] == data2[key]:
+                result["status"] = "unchanged"
+                result["value"] = data1[key]
+            elif not isinstance(data1[key], dict) or \
+                 not isinstance(data2[key], dict):
+                result["status"] = "changed"
+                result["old_value"] = data1[key]
+                result["new_value"] = data2[key]
+            else:
+                result["status"] = "nested change"
+                result["value"] = {}
+                walk_dicts(data1[key], data2[key], result["value"])
+            parent[key] = result
     
-    if not isinstance(content2, dict):
-        return modified(content1), content2
-
-    keys = content1.keys() | content2.keys()
-    for key in keys:
-        result = {}
-        if key not in content1:
-            result["status"] = "added"
-            result["value"] = modified(content2[key])
-        elif key not in content2:
-            result["status"] = "removed"
-            result["value"] = modified(content1[key])
-        elif content1[key] == content2[key]:
-            result["status"] = "unchanged"
-            result["value"] = modified(content1[key])
-        else:
-            result["status"] = "changed"
-            result["value"] = build_diff(content1[key], content2[key])
-        difference[key] = result
-    
+    walk_dicts(content1, content2, difference)
     return difference
 
 

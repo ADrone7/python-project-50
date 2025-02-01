@@ -3,7 +3,7 @@ import argparse
 from gendiff import generate_diff
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         prog="gendiff",
         description="Compares two configuration files and shows a difference."
