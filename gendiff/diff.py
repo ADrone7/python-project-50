@@ -1,5 +1,6 @@
 from gendiff.formatters import format_json, format_plain, format_stylish
-from gendiff.parse import parse_file
+from gendiff.parser import parse
+from gendiff.reader import get_format, read_file
 
 
 def build_diff(content1: dict, content2: dict) -> dict:
@@ -35,8 +36,14 @@ def build_diff(content1: dict, content2: dict) -> dict:
 
 def generate_diff(file_path1: str, file_path2: str,
                   format_name: str = 'stylish') -> str:
-    content1 = parse_file(file_path1)
-    content2 = parse_file(file_path2)
+    text1 = read_file(file_path1)
+    text2 = read_file(file_path2)
+
+    format1 = get_format(file_path1)
+    format2 = get_format(file_path2)
+
+    content1 = parse(text1, format1)
+    content2 = parse(text2, format2)
 
     diff = build_diff(content1, content2)
     match format_name:

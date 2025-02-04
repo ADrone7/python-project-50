@@ -1,4 +1,7 @@
 [project]
+authors = [
+    {name = "ADrone7"},
+]
 name = "hexlet-code"
 version = "0.1.1"
 description = "Compare two json or yaml files"

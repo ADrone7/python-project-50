@@ -2,7 +2,7 @@ from pathlib import Path
 
 FILE1 = "file1"
 FILE2 = "file2"
-RESULT_STYLSIH = "file1_file2_stylish.txt"
+RESULT_STYLISH = "file1_file2_stylish.txt"
 RESULT_RECURSIVE_JSON = "file1_file2_recursive_json.txt"
 RESULT_RECURSIVE_STYLISH = "file1_file2_recursive_stylish.txt"
 RESULT_RECURSIVE_PLAIN = "file1_file2_recursive_plain.txt"
