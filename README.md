@@ -31,7 +31,7 @@ make package-install
 
 Compare two json or yaml files using CLI and print a difference. The difference can be printed in 3 different formats: json, plain, stylish.
 
-[![asciicast](https://asciinema.org/a/hqFUrHOaWyWdnB71AI6hu7HX2.svg)](https://asciinema.org/a/hqFUrHOaWyWdnB71AI6hu7HX2)
+[![asciicast](https://asciinema.org/a/G87li6LPIW5rAqkxXNhjjx1ZI.svg)](https://asciinema.org/a/G87li6LPIW5rAqkxXNhjjx1ZI)
 
 The package can also be used as a library
 
