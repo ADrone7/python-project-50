@@ -25,10 +25,14 @@ make build
 make package-install
 ```
 
-<script src="https://asciinema.org/a/km4q10JFe08pbLLIXb7ZhNY9h.js" id="asciicast-km4q10JFe08pbLLIXb7ZhNY9h" async="true"></script>
+[![asciicast](https://asciinema.org/a/km4q10JFe08pbLLIXb7ZhNY9h.svg)](https://asciinema.org/a/km4q10JFe08pbLLIXb7ZhNY9h)
 
 ## Description
 
 Compare two json or yaml files using CLI and print a difference. The difference can be printed in 3 different formats: json, plain, stylish.
 
 [![asciicast](https://asciinema.org/a/hqFUrHOaWyWdnB71AI6hu7HX2.svg)](https://asciinema.org/a/hqFUrHOaWyWdnB71AI6hu7HX2)
+
+The package can also be used as a library
+
+[![asciicast](https://asciinema.org/a/QyBTRoQVeYiGXew33mpJ7W30b.svg)](https://asciinema.org/a/QyBTRoQVeYiGXew33mpJ7W30b)
